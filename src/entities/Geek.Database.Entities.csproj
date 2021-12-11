@@ -4,6 +4,17 @@
         <TargetFramework>net5.0</TargetFramework>
         <AssemblyName>Geek.Database.Entities</AssemblyName>
         <RootNamespace>Geek.Database.Entities</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IsPackable>true</IsPackable>
+        <Title>Geek.I.Am Article database entities</Title>
+        <Authors>Gary Woodfine</Authors>
+        <Description>Article CMS for the Geek.I.Am mobile application</Description>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>database</PackageTags>
+        <RepositoryUrl>https://github.com/Geek-I-Am/articles-db</RepositoryUrl>
+        <Copyright>Copyright © 2005 - 2021 Three Nine Consulting Limited</Copyright>
+        <PackageProjectUrl>https://geekiam.io</PackageProjectUrl>
+        <PackageIconUrl>https://static.threenine.co.uk/threenine_icon.png</PackageIconUrl>
     </PropertyGroup>
 
 </Project>
