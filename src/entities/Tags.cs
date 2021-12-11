@@ -2,13 +2,10 @@ using System;
 
 namespace Geek.Database.Entities
 {
-    public class Website
+    public class Tags
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string  Url { get; set; }
-        public string Tagline { get; set; }
-        
-        
+        public DateTime Created { get; set; }
     }
 }

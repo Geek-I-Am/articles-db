@@ -22,7 +22,7 @@ namespace Geek.Database.Configuration
                 .HasColumnType(ColumnTypes.UUID)
                 .HasDefaultValueSql(PostgreExtensions.UUIDAlgorithm)
                 .IsRequired();
-            
+
             builder.Property(x => x.Author)
                 .HasColumnType(ColumnTypes.Varchar)
                 .HasMaxLength(60)
@@ -37,17 +37,19 @@ namespace Geek.Database.Configuration
                 .HasColumnType(ColumnTypes.Varchar)
                 .HasMaxLength(300)
                 .IsRequired();
-            
+
             builder.Property(x => x.Published)
                 .HasColumnType(ColumnTypes.Date)
                 .IsRequired();
-            
+
             builder.Property(x => x.Url)
                 .HasColumnType(ColumnTypes.Varchar)
                 .HasMaxLength(286)
                 .IsRequired();
-            
-            
+
+            builder.Property(x => x.Created)
+                .HasColumnType(ColumnTypes.TimeStamp)
+                .IsRequired();
         }
     }
 }

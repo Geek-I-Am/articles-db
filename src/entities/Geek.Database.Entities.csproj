@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <AssemblyName>Geek.Database.Entities</AssemblyName>
         <RootNamespace>Geek.Database.Entities</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

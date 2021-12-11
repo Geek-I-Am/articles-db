@@ -9,13 +9,16 @@ namespace Geek.Database
         public GeekContext(DbContextOptions<GeekContext> options) : base(options)
         {
         }
-        
+
         public DbSet<Articles> Articles { get; set; }
-        
+        public DbSet<Tags> Tags { get; set; }
+        public DbSet<ArticleTags> ArticleTags { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresExtension(PostgreExtensions.UUIDGenerator);
-            modelBuilder.HasCollation("case_insensitive_collation", locale: "en-u-ks-primary", provider: "icu", deterministic: false);
+            modelBuilder.HasCollation("case_insensitive_collation", "en-u-ks-primary", "icu",
+                false);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
