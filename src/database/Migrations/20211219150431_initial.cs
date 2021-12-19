@@ -55,11 +55,28 @@ namespace Geek.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
+                    Name = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Permalink = table.Column<string>(type: "varchar", maxLength: 55, nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tags",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
                     Name = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Permalink = table.Column<string>(type: "varchar", maxLength: 55, nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp", nullable: false)
                 },
                 constraints: table =>
@@ -93,6 +110,19 @@ namespace Geek.Database.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_Id",
+                table: "Categories",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_Name",
+                table: "Categories",
+                column: "Name",
+                unique: true)
+                .Annotation("Relational:Collation", new[] { "case_insensitive_collation" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tags_Id",
                 table: "Tags",
                 column: "Id",
@@ -116,6 +146,9 @@ namespace Geek.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "ArticleTags");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Tags");

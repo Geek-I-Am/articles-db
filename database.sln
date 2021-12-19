@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geek.Database.Entities", "src\entities\Geek.Database.Entities.csproj", "{E1B3DECF-F708-4FFE-B07F-A41B5E568BC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geekiam.Database.Entities", "src\entities\Geekiam.Database.Entities.csproj", "{E1B3DECF-F708-4FFE-B07F-A41B5E568BC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geek.Database", "src\database\Geek.Database.csproj", "{9EEAB84F-AA54-47B1-B13A-60F931C704D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geekiam.Database", "src\database\Geekiam.Database.csproj", "{9EEAB84F-AA54-47B1-B13A-60F931C704D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

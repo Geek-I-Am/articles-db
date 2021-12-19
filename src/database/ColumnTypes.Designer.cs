@@ -7,10 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Geek.Database {
-    using System;
-    
-    
+namespace Geekiam.Database {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -28,7 +25,7 @@ namespace Geek.Database {
         internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Geek.Database.ColumnTypes", typeof(ColumnTypes).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Geekiam.Database.ColumnTypes", typeof(ColumnTypes).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <AssemblyName>Geek.Database</AssemblyName>
-        <RootNamespace>Geek.Database</RootNamespace>
+        <AssemblyName>Geekiam.Database</AssemblyName>
+        <RootNamespace>Geekiam.Database</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <IsPackable>true</IsPackable>
         <Title>Geek.I.Am Article Database</Title>
@@ -40,6 +40,6 @@
       </Compile>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\entities\Geek.Database.Entities.csproj" />
+      <ProjectReference Include="..\entities\Geekiam.Database.Entities.csproj" />
     </ItemGroup>
 </Project>

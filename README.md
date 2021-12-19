@@ -12,18 +12,18 @@ This database is just used to enable creating migrations and testing them,
 
 #### Install EF Core tool
 
-```shell
+```sh
 dotnet tool install --global dotnet-ef
 ```
 
 #### Update Tool
 
-```shell
+```sh
 dotnet tool update --global dotnet-ef
 ```
 
 ### Verify Installation
 
-```shell
+```sh
 dotnet ef
 ```

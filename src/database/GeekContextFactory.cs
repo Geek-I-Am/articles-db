@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Geek.Database
+namespace Geekiam.Database
 {
     internal class GeekContextFactory : IDesignTimeDbContextFactory<GeekContext>
     {

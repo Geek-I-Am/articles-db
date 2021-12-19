@@ -1,4 +1,4 @@
-namespace Geek.Database
+namespace Geekiam.Database
 {
     internal static class PostgreExtensions
     {

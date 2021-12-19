@@ -1,6 +1,6 @@
 using System;
 
-namespace Geek.Database.Entities
+namespace Geekiam.Database.Entities
 {
     public class ArticleTags
     {

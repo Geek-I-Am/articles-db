@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <AssemblyName>Geek.Database.Entities</AssemblyName>
-        <RootNamespace>Geek.Database.Entities</RootNamespace>
+        <AssemblyName>Geekiam.Database.Entities</AssemblyName>
+        <RootNamespace>Geekiam.Database.Entities</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <IsPackable>true</IsPackable>
         <Title>Geek.I.Am Article database entities</Title>

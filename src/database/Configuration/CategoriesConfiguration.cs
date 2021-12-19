@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Geekiam.Database.Configuration;
 
-public class TagsConfiguration : IEntityTypeConfiguration<Tags>
+public class CategoriesConfiguration : IEntityTypeConfiguration<Categories>
 {
-    public void Configure(EntityTypeBuilder<Tags> builder)
+    public void Configure(EntityTypeBuilder<Categories> builder)
     {
-        builder.ToTable(nameof(Tags));
+        builder.ToTable(nameof(Categories));
         builder.HasKey(x => x.Id);
 
         builder.HasIndex(x => x.Id)

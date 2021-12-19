@@ -1,8 +1,8 @@
-using Geek.Database.Entities;
+using Geekiam.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Geek.Database.Configuration
+namespace Geekiam.Database.Configuration
 {
     public class ArticleConfiguration : IEntityTypeConfiguration<Articles>
     {
