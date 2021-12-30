@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Geek.Database.Migrations
+namespace Geekiam.Database.Migrations
 {
     public partial class initial : Migration
     {
@@ -32,6 +32,7 @@ namespace Geek.Database.Migrations
                     Title = table.Column<string>(type: "varchar", maxLength: 75, nullable: false),
                     Author = table.Column<string>(type: "varchar", maxLength: 60, nullable: false),
                     Summary = table.Column<string>(type: "varchar", maxLength: 300, nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: true),
                     Published = table.Column<DateTime>(type: "date", nullable: false),
                     Url = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp", nullable: false)

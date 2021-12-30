@@ -5,17 +5,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace Geekiam.Database
 {
-    internal class GeekContextFactory : IDesignTimeDbContextFactory<GeekContext>
+    internal class GeekiamContextFactory : IDesignTimeDbContextFactory<GeekiamContext>
     {
         private static IConfiguration Configuration => new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
             .Build();
 
-        public GeekContext CreateDbContext(string[] args)
+        public GeekiamContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<GeekContext>();
+            var builder = new DbContextOptionsBuilder<GeekiamContext>();
             builder.UseNpgsql(Configuration.GetConnectionString("postgre"));
-            return new GeekContext(builder.Options);
+            return new GeekiamContext(builder.Options);
         }
     }
 }

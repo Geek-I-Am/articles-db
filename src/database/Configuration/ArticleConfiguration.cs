@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Geekiam.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -37,6 +38,9 @@ namespace Geekiam.Database.Configuration
                 .HasColumnType(ColumnTypes.Varchar)
                 .HasMaxLength(300)
                 .IsRequired();
+
+            builder.Property(x => x.Content)
+                .HasColumnType(ColumnTypes.Text);
 
             builder.Property(x => x.Published)
                 .HasColumnType(ColumnTypes.Date)

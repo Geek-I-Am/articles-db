@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Geekiam.Database
 {
-    public class GeekContext : DbContext
+    public class GeekiamContext : DbContext
     {
-        public GeekContext(DbContextOptions<GeekContext> options) : base(options)
+        public GeekiamContext(DbContextOptions<GeekiamContext> options) : base(options)
         {
         }
 
