@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Geekiam.Database.Migrations
 {
     [DbContext(typeof(GeekiamContext))]
-    [Migration("20211230175715_initial")]
+    [Migration("20220103205114_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,10 +72,8 @@ namespace Geekiam.Database.Migrations
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("uuid_generate_v4()");
 
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("varchar");
+                    b.Property<Guid?>("AuthorId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Content")
                         .HasColumnType("text");
@@ -103,6 +101,8 @@ namespace Geekiam.Database.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
                     b.HasIndex("Id")
                         .IsUnique();
 
@@ -111,6 +111,34 @@ namespace Geekiam.Database.Migrations
                         .UseCollation(new[] { "case_insensitive_collation" });
 
                     b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.Authors", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<string>("Biography")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(65)
+                        .HasColumnType("varchar");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.Categories", b =>
@@ -181,6 +209,20 @@ namespace Geekiam.Database.Migrations
                         .UseCollation(new[] { "case_insensitive_collation" });
 
                     b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.Articles", b =>
+                {
+                    b.HasOne("Geekiam.Database.Entities.Authors", "Author")
+                        .WithMany("Articles")
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.Authors", b =>
+                {
+                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }

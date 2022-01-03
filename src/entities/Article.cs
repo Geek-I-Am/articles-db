@@ -2,11 +2,11 @@
 
 namespace Geekiam.Database.Entities
 {
-    public class Articles
+    public class Articles : BaseEntity
     {
-        public Guid Id { get; set; }
+      
         public string Title { get; set; }
-        public string Author { get; set; }
+        public Authors Author { get; set; }
         public string Summary { get; set; }
         
         public string Content { get; set; }

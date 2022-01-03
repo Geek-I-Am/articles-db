@@ -25,24 +25,6 @@ namespace Geekiam.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Articles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
-                    Title = table.Column<string>(type: "varchar", maxLength: 75, nullable: false),
-                    Author = table.Column<string>(type: "varchar", maxLength: 60, nullable: false),
-                    Summary = table.Column<string>(type: "varchar", maxLength: 300, nullable: false),
-                    Content = table.Column<string>(type: "text", nullable: true),
-                    Published = table.Column<DateTime>(type: "date", nullable: false),
-                    Url = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Articles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ArticleTags",
                 columns: table => new
                 {
@@ -53,6 +35,20 @@ namespace Geekiam.Database.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ArticleTags", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Authors",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
+                    FirstName = table.Column<string>(type: "varchar", maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(type: "varchar", maxLength: 65, nullable: false),
+                    Biography = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Authors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,11 +81,40 @@ namespace Geekiam.Database.Migrations
                     table.PrimaryKey("PK_Tags", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
+                    Title = table.Column<string>(type: "varchar", maxLength: 75, nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Summary = table.Column<string>(type: "varchar", maxLength: 300, nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: true),
+                    Published = table.Column<DateTime>(type: "date", nullable: false),
+                    Url = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Articles_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleCategories_Id",
                 table: "ArticleCategories",
                 column: "Id",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_AuthorId",
+                table: "Articles",
+                column: "AuthorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Articles_Id",
@@ -107,6 +132,12 @@ namespace Geekiam.Database.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleTags_Id",
                 table: "ArticleTags",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Authors_Id",
+                table: "Authors",
                 column: "Id",
                 unique: true);
 
@@ -153,6 +184,9 @@ namespace Geekiam.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "Authors");
         }
     }
 }
