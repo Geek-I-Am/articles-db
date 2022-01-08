@@ -21,44 +21,54 @@ namespace Geekiam.Database.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("ArticleTagsArticles", b =>
+                {
+                    b.Property<Guid>("ArticlesId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TagsArticleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TagsTagId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ArticlesId", "TagsArticleId", "TagsTagId");
+
+                    b.HasIndex("TagsArticleId", "TagsTagId");
+
+                    b.ToTable("ArticleTagsArticles");
+                });
+
             modelBuilder.Entity("Geekiam.Database.Entities.ArticleCategories", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("uuid_generate_v4()");
-
                     b.Property<Guid>("ArticleId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
+                    b.HasKey("ArticleId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("ArticleCategories");
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.ArticleTags", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("uuid_generate_v4()");
-
                     b.Property<Guid>("ArticleId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("TagId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
+                    b.HasKey("ArticleId", "TagId");
 
                     b.ToTable("ArticleTags");
                 });
@@ -70,7 +80,10 @@ namespace Geekiam.Database.Migrations
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("uuid_generate_v4()");
 
-                    b.Property<Guid?>("AuthorId")
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CategoriesId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Content")
@@ -87,6 +100,9 @@ namespace Geekiam.Database.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("varchar");
 
+                    b.Property<Guid?>("TagsId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(75)
@@ -101,8 +117,12 @@ namespace Geekiam.Database.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("CategoriesId");
+
                     b.HasIndex("Id")
                         .IsUnique();
+
+                    b.HasIndex("TagsId");
 
                     b.HasIndex("Url")
                         .IsUnique()
@@ -181,6 +201,12 @@ namespace Geekiam.Database.Migrations
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("uuid_generate_v4()");
 
+                    b.Property<Guid?>("ArticleTagsArticleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ArticleTagsTagId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp");
 
@@ -206,19 +232,92 @@ namespace Geekiam.Database.Migrations
                         .IsUnique()
                         .UseCollation(new[] { "case_insensitive_collation" });
 
+                    b.HasIndex("ArticleTagsArticleId", "ArticleTagsTagId");
+
                     b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("ArticleTagsArticles", b =>
+                {
+                    b.HasOne("Geekiam.Database.Entities.Articles", null)
+                        .WithMany()
+                        .HasForeignKey("ArticlesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Geekiam.Database.Entities.ArticleTags", null)
+                        .WithMany()
+                        .HasForeignKey("TagsArticleId", "TagsTagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.ArticleCategories", b =>
+                {
+                    b.HasOne("Geekiam.Database.Entities.Articles", "Article")
+                        .WithMany("Categories")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Geekiam.Database.Entities.Categories", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.Articles", b =>
                 {
                     b.HasOne("Geekiam.Database.Entities.Authors", "Author")
                         .WithMany("Articles")
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Geekiam.Database.Entities.Categories", null)
+                        .WithMany("Articles")
+                        .HasForeignKey("CategoriesId");
+
+                    b.HasOne("Geekiam.Database.Entities.Tags", null)
+                        .WithMany("Articles")
+                        .HasForeignKey("TagsId");
 
                     b.Navigation("Author");
                 });
 
+            modelBuilder.Entity("Geekiam.Database.Entities.Tags", b =>
+                {
+                    b.HasOne("Geekiam.Database.Entities.ArticleTags", null)
+                        .WithMany("Tags")
+                        .HasForeignKey("ArticleTagsArticleId", "ArticleTagsTagId");
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.ArticleTags", b =>
+                {
+                    b.Navigation("Tags");
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.Articles", b =>
+                {
+                    b.Navigation("Categories");
+                });
+
             modelBuilder.Entity("Geekiam.Database.Entities.Authors", b =>
+                {
+                    b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.Categories", b =>
+                {
+                    b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.Tags", b =>
                 {
                     b.Navigation("Articles");
                 });

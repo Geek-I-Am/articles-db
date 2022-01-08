@@ -24,10 +24,8 @@ namespace Geekiam.Database.Configuration
                 .HasDefaultValueSql(PostgreExtensions.UUIDAlgorithm)
                 .IsRequired();
 
-            builder.HasOne(a => a.Author)
-                .WithMany(art => art.Articles);
-                
-
+          
+            
            builder.Property(x => x.Title)
                 .HasColumnType(ColumnTypes.Varchar)
                 .HasMaxLength(75)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Geekiam.Database.Entities
 {
@@ -6,6 +7,7 @@ namespace Geekiam.Database.Entities
     {
       
         public string Title { get; set; }
+        public Guid AuthorId { get; set; }
         public Authors Author { get; set; }
         public string Summary { get; set; }
         
@@ -15,6 +17,7 @@ namespace Geekiam.Database.Entities
         
         public DateTime Created { get; set; }
 
-       
+        public ICollection<ArticleCategories> Categories { get; set; }
+        public ICollection<ArticleTags> Tags { get; set; }
     }
 }

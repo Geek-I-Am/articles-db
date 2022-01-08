@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Geekiam.Database.Entities
 {
@@ -7,5 +8,8 @@ namespace Geekiam.Database.Entities
     
         public Guid ArticleId { get; set; }
         public Guid TagId { get; set; }
+        
+        public ICollection<Articles> Articles { get; set; }
+        public ICollection<Tags> Tags { get; set; }
     }
 }
