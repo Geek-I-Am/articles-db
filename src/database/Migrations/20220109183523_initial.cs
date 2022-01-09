@@ -80,52 +80,78 @@ namespace Geekiam.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticlesCategories",
+                name: "ArticleCategories",
                 columns: table => new
                 {
-                    ArticlesId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CategoriesId = table.Column<Guid>(type: "uuid", nullable: false)
+                    ArticleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ArticleCategoriesArticleId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ArticleCategoriesCategoryId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticlesCategories", x => new { x.ArticlesId, x.CategoriesId });
+                    table.PrimaryKey("PK_ArticleCategories", x => new { x.ArticleId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_ArticlesCategories_Articles_ArticlesId",
-                        column: x => x.ArticlesId,
+                        name: "FK_ArticleCategories_ArticleCategories_ArticleCategoriesArticl~",
+                        columns: x => new { x.ArticleCategoriesArticleId, x.ArticleCategoriesCategoryId },
+                        principalTable: "ArticleCategories",
+                        principalColumns: new[] { "ArticleId", "CategoryId" },
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ArticleCategories_Articles_ArticleId",
+                        column: x => x.ArticleId,
                         principalTable: "Articles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArticlesCategories_Categories_CategoriesId",
-                        column: x => x.CategoriesId,
+                        name: "FK_ArticleCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticlesTags",
+                name: "ArticleTags",
                 columns: table => new
                 {
-                    ArticlesId = table.Column<Guid>(type: "uuid", nullable: false),
-                    TagsId = table.Column<Guid>(type: "uuid", nullable: false)
+                    ArticleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TagId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ArticleTagsArticleId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ArticleTagsTagId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticlesTags", x => new { x.ArticlesId, x.TagsId });
+                    table.PrimaryKey("PK_ArticleTags", x => new { x.ArticleId, x.TagId });
                     table.ForeignKey(
-                        name: "FK_ArticlesTags_Articles_ArticlesId",
-                        column: x => x.ArticlesId,
+                        name: "FK_ArticleTags_Articles_ArticleId",
+                        column: x => x.ArticleId,
                         principalTable: "Articles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArticlesTags_Tags_TagsId",
-                        column: x => x.TagsId,
+                        name: "FK_ArticleTags_ArticleTags_ArticleTagsArticleId_ArticleTagsTag~",
+                        columns: x => new { x.ArticleTagsArticleId, x.ArticleTagsTagId },
+                        principalTable: "ArticleTags",
+                        principalColumns: new[] { "ArticleId", "TagId" },
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ArticleTags_Tags_TagId",
+                        column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleCategories_ArticleCategoriesArticleId_ArticleCategor~",
+                table: "ArticleCategories",
+                columns: new[] { "ArticleCategoriesArticleId", "ArticleCategoriesCategoryId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleCategories_CategoryId",
+                table: "ArticleCategories",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Articles_AuthorId",
@@ -146,14 +172,14 @@ namespace Geekiam.Database.Migrations
                 .Annotation("Relational:Collation", new[] { "case_insensitive_collation" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticlesCategories_CategoriesId",
-                table: "ArticlesCategories",
-                column: "CategoriesId");
+                name: "IX_ArticleTags_ArticleTagsArticleId_ArticleTagsTagId",
+                table: "ArticleTags",
+                columns: new[] { "ArticleTagsArticleId", "ArticleTagsTagId" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticlesTags_TagsId",
-                table: "ArticlesTags",
-                column: "TagsId");
+                name: "IX_ArticleTags_TagId",
+                table: "ArticleTags",
+                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_Id",
@@ -191,10 +217,10 @@ namespace Geekiam.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ArticlesCategories");
+                name: "ArticleCategories");
 
             migrationBuilder.DropTable(
-                name: "ArticlesTags");
+                name: "ArticleTags");
 
             migrationBuilder.DropTable(
                 name: "Categories");

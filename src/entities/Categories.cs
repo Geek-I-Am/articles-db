@@ -11,5 +11,5 @@ public class Categories : BaseEntity
     public string Permalink { get; set; }
     public DateTime Created { get; set; }
 
-    public ICollection<Articles> Articles { get; set; }
+    public ICollection<ArticleCategories> ArticleCategories { get; set; }
 }

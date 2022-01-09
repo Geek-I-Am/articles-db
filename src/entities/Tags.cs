@@ -11,7 +11,7 @@ namespace Geekiam.Database.Entities
         public string Permalink { get; set; }
         public DateTime Created { get; set; }
         
-        public ICollection<Articles> Articles { get; set; }
+        public ICollection<ArticleTags> ArticleTags { get; set; }
     }
     
 }
