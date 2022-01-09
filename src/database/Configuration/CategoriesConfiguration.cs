@@ -1,3 +1,4 @@
+using System;
 using Geekiam.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -39,5 +40,11 @@ public class CategoriesConfiguration : IEntityTypeConfiguration<Categories>
         builder.Property(x => x.Created)
             .HasColumnType(ColumnTypes.TimeStamp)
             .IsRequired();
+        
+        builder.HasData(
+            new Categories {Id = Guid.Parse("334e7c6a-9779-4018-90d2-7b7f43a8e101"), Name = "Software Development", Permalink = "software-development", Description = "Software development based articles", Created = DateTime.Now},
+            new Categories {Id = Guid.Parse("334e7c6a-9779-4018-90d2-7b7f43a8e102"), Name = "Cryptocurrency", Permalink = "cryptocurrency",Description = "Cryptocurrency related articles", Created = DateTime.Now}
+               
+        );
     }
 }

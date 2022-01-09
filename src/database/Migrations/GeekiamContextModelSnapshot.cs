@@ -176,6 +176,24 @@ namespace Geekiam.Database.Migrations
                         .UseCollation(new[] { "case_insensitive_collation" });
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"),
+                            Created = new DateTime(2022, 1, 9, 21, 56, 13, 668, DateTimeKind.Local).AddTicks(4162),
+                            Description = "Software development based articles",
+                            Name = "Software Development",
+                            Permalink = "software-development"
+                        },
+                        new
+                        {
+                            Id = new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"),
+                            Created = new DateTime(2022, 1, 9, 21, 56, 13, 677, DateTimeKind.Local).AddTicks(3886),
+                            Description = "Cryptocurrency related articles",
+                            Name = "Cryptocurrency",
+                            Permalink = "cryptocurrency"
+                        });
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.Tags", b =>
@@ -211,6 +229,24 @@ namespace Geekiam.Database.Migrations
                         .UseCollation(new[] { "case_insensitive_collation" });
 
                     b.ToTable("Tags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"),
+                            Created = new DateTime(2022, 1, 9, 21, 56, 13, 679, DateTimeKind.Local).AddTicks(4796),
+                            Description = "bitcoin articles",
+                            Name = "Bitcoin",
+                            Permalink = "bitcoin"
+                        },
+                        new
+                        {
+                            Id = new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"),
+                            Created = new DateTime(2022, 1, 9, 21, 56, 13, 679, DateTimeKind.Local).AddTicks(5090),
+                            Description = "Crypto related articles",
+                            Name = "Crypto",
+                            Permalink = "crypto"
+                        });
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.ArticleCategories", b =>

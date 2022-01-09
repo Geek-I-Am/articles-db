@@ -143,6 +143,24 @@ namespace Geekiam.Database.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Created", "Description", "Name", "Permalink" },
+                values: new object[,]
+                {
+                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 9, 21, 56, 13, 668, DateTimeKind.Local).AddTicks(4162), "Software development based articles", "Software Development", "software-development" },
+                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 9, 21, 56, 13, 677, DateTimeKind.Local).AddTicks(3886), "Cryptocurrency related articles", "Cryptocurrency", "cryptocurrency" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Tags",
+                columns: new[] { "Id", "Created", "Description", "Name", "Permalink" },
+                values: new object[,]
+                {
+                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 9, 21, 56, 13, 679, DateTimeKind.Local).AddTicks(4796), "bitcoin articles", "Bitcoin", "bitcoin" },
+                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 9, 21, 56, 13, 679, DateTimeKind.Local).AddTicks(5090), "Crypto related articles", "Crypto", "crypto" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleCategories_ArticleCategoriesArticleId_ArticleCategor~",
                 table: "ArticleCategories",
