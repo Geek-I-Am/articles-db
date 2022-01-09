@@ -21,56 +21,34 @@ namespace Geekiam.Database.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("ArticleTagsArticles", b =>
+            modelBuilder.Entity("ArticlesCategories", b =>
                 {
                     b.Property<Guid>("ArticlesId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("TagsArticleId")
+                    b.Property<Guid>("CategoriesId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("TagsTagId")
-                        .HasColumnType("uuid");
+                    b.HasKey("ArticlesId", "CategoriesId");
 
-                    b.HasKey("ArticlesId", "TagsArticleId", "TagsTagId");
+                    b.HasIndex("CategoriesId");
 
-                    b.HasIndex("TagsArticleId", "TagsTagId");
-
-                    b.ToTable("ArticleTagsArticles");
+                    b.ToTable("ArticlesCategories");
                 });
 
-            modelBuilder.Entity("Geekiam.Database.Entities.ArticleCategories", b =>
+            modelBuilder.Entity("ArticlesTags", b =>
                 {
-                    b.Property<Guid>("ArticleId")
+                    b.Property<Guid>("ArticlesId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid>("TagsId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.HasKey("ArticlesId", "TagsId");
 
-                    b.HasKey("ArticleId", "CategoryId");
+                    b.HasIndex("TagsId");
 
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("ArticleCategories");
-                });
-
-            modelBuilder.Entity("Geekiam.Database.Entities.ArticleTags", b =>
-                {
-                    b.Property<Guid>("ArticleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("TagId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("ArticleId", "TagId");
-
-                    b.ToTable("ArticleTags");
+                    b.ToTable("ArticlesTags");
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.Articles", b =>
@@ -81,9 +59,6 @@ namespace Geekiam.Database.Migrations
                         .HasDefaultValueSql("uuid_generate_v4()");
 
                     b.Property<Guid>("AuthorId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("CategoriesId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Content")
@@ -100,9 +75,6 @@ namespace Geekiam.Database.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("varchar");
 
-                    b.Property<Guid?>("TagsId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(75)
@@ -117,12 +89,8 @@ namespace Geekiam.Database.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("CategoriesId");
-
                     b.HasIndex("Id")
                         .IsUnique();
-
-                    b.HasIndex("TagsId");
 
                     b.HasIndex("Url")
                         .IsUnique()
@@ -201,12 +169,6 @@ namespace Geekiam.Database.Migrations
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("uuid_generate_v4()");
 
-                    b.Property<Guid?>("ArticleTagsArticleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("ArticleTagsTagId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp");
 
@@ -232,12 +194,10 @@ namespace Geekiam.Database.Migrations
                         .IsUnique()
                         .UseCollation(new[] { "case_insensitive_collation" });
 
-                    b.HasIndex("ArticleTagsArticleId", "ArticleTagsTagId");
-
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("ArticleTagsArticles", b =>
+            modelBuilder.Entity("ArticlesCategories", b =>
                 {
                     b.HasOne("Geekiam.Database.Entities.Articles", null)
                         .WithMany()
@@ -245,30 +205,26 @@ namespace Geekiam.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Geekiam.Database.Entities.ArticleTags", null)
+                    b.HasOne("Geekiam.Database.Entities.Categories", null)
                         .WithMany()
-                        .HasForeignKey("TagsArticleId", "TagsTagId")
+                        .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Geekiam.Database.Entities.ArticleCategories", b =>
+            modelBuilder.Entity("ArticlesTags", b =>
                 {
-                    b.HasOne("Geekiam.Database.Entities.Articles", "Article")
-                        .WithMany("Categories")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Geekiam.Database.Entities.Categories", "Category")
+                    b.HasOne("Geekiam.Database.Entities.Articles", null)
                         .WithMany()
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("ArticlesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Article");
-
-                    b.Navigation("Category");
+                    b.HasOne("Geekiam.Database.Entities.Tags", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.Articles", b =>
@@ -279,45 +235,10 @@ namespace Geekiam.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Geekiam.Database.Entities.Categories", null)
-                        .WithMany("Articles")
-                        .HasForeignKey("CategoriesId");
-
-                    b.HasOne("Geekiam.Database.Entities.Tags", null)
-                        .WithMany("Articles")
-                        .HasForeignKey("TagsId");
-
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("Geekiam.Database.Entities.Tags", b =>
-                {
-                    b.HasOne("Geekiam.Database.Entities.ArticleTags", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("ArticleTagsArticleId", "ArticleTagsTagId");
-                });
-
-            modelBuilder.Entity("Geekiam.Database.Entities.ArticleTags", b =>
-                {
-                    b.Navigation("Tags");
-                });
-
-            modelBuilder.Entity("Geekiam.Database.Entities.Articles", b =>
-                {
-                    b.Navigation("Categories");
-                });
-
             modelBuilder.Entity("Geekiam.Database.Entities.Authors", b =>
-                {
-                    b.Navigation("Articles");
-                });
-
-            modelBuilder.Entity("Geekiam.Database.Entities.Categories", b =>
-                {
-                    b.Navigation("Articles");
-                });
-
-            modelBuilder.Entity("Geekiam.Database.Entities.Tags", b =>
                 {
                     b.Navigation("Articles");
                 });

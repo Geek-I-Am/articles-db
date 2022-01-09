@@ -23,8 +23,6 @@ namespace Geekiam.Database.Configuration
                 .HasColumnType(ColumnTypes.UUID)
                 .HasDefaultValueSql(PostgreExtensions.UUIDAlgorithm)
                 .IsRequired();
-
-          
             
            builder.Property(x => x.Title)
                 .HasColumnType(ColumnTypes.Varchar)
