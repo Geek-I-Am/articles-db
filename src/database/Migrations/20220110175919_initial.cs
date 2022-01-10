@@ -84,19 +84,11 @@ namespace Geekiam.Database.Migrations
                 columns: table => new
                 {
                     ArticleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ArticleCategoriesArticleId = table.Column<Guid>(type: "uuid", nullable: true),
-                    ArticleCategoriesCategoryId = table.Column<Guid>(type: "uuid", nullable: true)
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ArticleCategories", x => new { x.ArticleId, x.CategoryId });
-                    table.ForeignKey(
-                        name: "FK_ArticleCategories_ArticleCategories_ArticleCategoriesArticl~",
-                        columns: x => new { x.ArticleCategoriesArticleId, x.ArticleCategoriesCategoryId },
-                        principalTable: "ArticleCategories",
-                        principalColumns: new[] { "ArticleId", "CategoryId" },
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ArticleCategories_Articles_ArticleId",
                         column: x => x.ArticleId,
@@ -116,9 +108,7 @@ namespace Geekiam.Database.Migrations
                 columns: table => new
                 {
                     ArticleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    TagId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ArticleTagsArticleId = table.Column<Guid>(type: "uuid", nullable: true),
-                    ArticleTagsTagId = table.Column<Guid>(type: "uuid", nullable: true)
+                    TagId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -129,12 +119,6 @@ namespace Geekiam.Database.Migrations
                         principalTable: "Articles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ArticleTags_ArticleTags_ArticleTagsArticleId_ArticleTagsTag~",
-                        columns: x => new { x.ArticleTagsArticleId, x.ArticleTagsTagId },
-                        principalTable: "ArticleTags",
-                        principalColumns: new[] { "ArticleId", "TagId" },
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ArticleTags_Tags_TagId",
                         column: x => x.TagId,
@@ -148,8 +132,8 @@ namespace Geekiam.Database.Migrations
                 columns: new[] { "Id", "Created", "Description", "Name", "Permalink" },
                 values: new object[,]
                 {
-                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 9, 21, 56, 13, 668, DateTimeKind.Local).AddTicks(4162), "Software development based articles", "Software Development", "software-development" },
-                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 9, 21, 56, 13, 677, DateTimeKind.Local).AddTicks(3886), "Cryptocurrency related articles", "Cryptocurrency", "cryptocurrency" }
+                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 10, 17, 59, 19, 1, DateTimeKind.Local).AddTicks(620), "Software development based articles", "Software Development", "software-development" },
+                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 10, 17, 59, 19, 10, DateTimeKind.Local).AddTicks(5308), "Cryptocurrency related articles", "Cryptocurrency", "cryptocurrency" }
                 });
 
             migrationBuilder.InsertData(
@@ -157,14 +141,9 @@ namespace Geekiam.Database.Migrations
                 columns: new[] { "Id", "Created", "Description", "Name", "Permalink" },
                 values: new object[,]
                 {
-                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 9, 21, 56, 13, 679, DateTimeKind.Local).AddTicks(4796), "bitcoin articles", "Bitcoin", "bitcoin" },
-                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 9, 21, 56, 13, 679, DateTimeKind.Local).AddTicks(5090), "Crypto related articles", "Crypto", "crypto" }
+                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 10, 17, 59, 19, 12, DateTimeKind.Local).AddTicks(8565), "bitcoin articles", "Bitcoin", "bitcoin" },
+                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 10, 17, 59, 19, 12, DateTimeKind.Local).AddTicks(9018), "Crypto related articles", "Crypto", "crypto" }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArticleCategories_ArticleCategoriesArticleId_ArticleCategor~",
-                table: "ArticleCategories",
-                columns: new[] { "ArticleCategoriesArticleId", "ArticleCategoriesCategoryId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleCategories_CategoryId",
@@ -188,11 +167,6 @@ namespace Geekiam.Database.Migrations
                 column: "Url",
                 unique: true)
                 .Annotation("Relational:Collation", new[] { "case_insensitive_collation" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArticleTags_ArticleTagsArticleId_ArticleTagsTagId",
-                table: "ArticleTags",
-                columns: new[] { "ArticleTagsArticleId", "ArticleTagsTagId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleTags_TagId",

@@ -10,6 +10,5 @@ public class ArticleCategories
     public Guid CategoryId { get; set; }
     public Categories Category { get; set; }
     
-    public ICollection<ArticleCategories> Articles { get; set; }
     
 }

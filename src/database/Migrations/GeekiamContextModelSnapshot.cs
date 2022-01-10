@@ -29,17 +29,9 @@ namespace Geekiam.Database.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ArticleCategoriesArticleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("ArticleCategoriesCategoryId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("ArticleId", "CategoryId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ArticleCategoriesArticleId", "ArticleCategoriesCategoryId");
 
                     b.ToTable("ArticleCategories");
                 });
@@ -52,17 +44,9 @@ namespace Geekiam.Database.Migrations
                     b.Property<Guid>("TagId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ArticleTagsArticleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("ArticleTagsTagId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("ArticleId", "TagId");
 
                     b.HasIndex("TagId");
-
-                    b.HasIndex("ArticleTagsArticleId", "ArticleTagsTagId");
 
                     b.ToTable("ArticleTags");
                 });
@@ -181,7 +165,7 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"),
-                            Created = new DateTime(2022, 1, 9, 21, 56, 13, 668, DateTimeKind.Local).AddTicks(4162),
+                            Created = new DateTime(2022, 1, 10, 17, 59, 19, 1, DateTimeKind.Local).AddTicks(620),
                             Description = "Software development based articles",
                             Name = "Software Development",
                             Permalink = "software-development"
@@ -189,7 +173,7 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"),
-                            Created = new DateTime(2022, 1, 9, 21, 56, 13, 677, DateTimeKind.Local).AddTicks(3886),
+                            Created = new DateTime(2022, 1, 10, 17, 59, 19, 10, DateTimeKind.Local).AddTicks(5308),
                             Description = "Cryptocurrency related articles",
                             Name = "Cryptocurrency",
                             Permalink = "cryptocurrency"
@@ -234,7 +218,7 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"),
-                            Created = new DateTime(2022, 1, 9, 21, 56, 13, 679, DateTimeKind.Local).AddTicks(4796),
+                            Created = new DateTime(2022, 1, 10, 17, 59, 19, 12, DateTimeKind.Local).AddTicks(8565),
                             Description = "bitcoin articles",
                             Name = "Bitcoin",
                             Permalink = "bitcoin"
@@ -242,7 +226,7 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"),
-                            Created = new DateTime(2022, 1, 9, 21, 56, 13, 679, DateTimeKind.Local).AddTicks(5090),
+                            Created = new DateTime(2022, 1, 10, 17, 59, 19, 12, DateTimeKind.Local).AddTicks(9018),
                             Description = "Crypto related articles",
                             Name = "Crypto",
                             Permalink = "crypto"
@@ -263,10 +247,6 @@ namespace Geekiam.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Geekiam.Database.Entities.ArticleCategories", null)
-                        .WithMany("Articles")
-                        .HasForeignKey("ArticleCategoriesArticleId", "ArticleCategoriesCategoryId");
-
                     b.Navigation("Article");
 
                     b.Navigation("Category");
@@ -286,10 +266,6 @@ namespace Geekiam.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Geekiam.Database.Entities.ArticleTags", null)
-                        .WithMany("Articles")
-                        .HasForeignKey("ArticleTagsArticleId", "ArticleTagsTagId");
-
                     b.Navigation("Article");
 
                     b.Navigation("Tag");
@@ -304,16 +280,6 @@ namespace Geekiam.Database.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("Geekiam.Database.Entities.ArticleCategories", b =>
-                {
-                    b.Navigation("Articles");
-                });
-
-            modelBuilder.Entity("Geekiam.Database.Entities.ArticleTags", b =>
-                {
-                    b.Navigation("Articles");
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.Articles", b =>

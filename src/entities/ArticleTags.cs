@@ -10,5 +10,5 @@ public class ArticleTags
     public Guid TagId { get; set; }
     public Tags Tag { get; set; }
     
-    public ICollection<ArticleTags> Articles { get; set; }
+    
 }
