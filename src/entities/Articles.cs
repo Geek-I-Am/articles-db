@@ -7,8 +7,7 @@ namespace Geekiam.Database.Entities
     {
       
         public string Title { get; set; }
-        public Guid AuthorId { get; set; }
-        public Authors Author { get; set; }
+      
         public string Summary { get; set; }
         
         public string Content { get; set; }

@@ -58,9 +58,6 @@ namespace Geekiam.Database.Migrations
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("uuid_generate_v4()");
 
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
@@ -86,8 +83,6 @@ namespace Geekiam.Database.Migrations
                         .HasColumnType("varchar");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
 
                     b.HasIndex("Id")
                         .IsUnique();
@@ -165,7 +160,7 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"),
-                            Created = new DateTime(2022, 1, 10, 17, 59, 19, 1, DateTimeKind.Local).AddTicks(620),
+                            Created = new DateTime(2022, 1, 10, 22, 22, 10, 494, DateTimeKind.Local).AddTicks(9091),
                             Description = "Software development based articles",
                             Name = "Software Development",
                             Permalink = "software-development"
@@ -173,11 +168,46 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"),
-                            Created = new DateTime(2022, 1, 10, 17, 59, 19, 10, DateTimeKind.Local).AddTicks(5308),
+                            Created = new DateTime(2022, 1, 10, 22, 22, 10, 503, DateTimeKind.Local).AddTicks(8298),
                             Description = "Cryptocurrency related articles",
                             Name = "Cryptocurrency",
                             Permalink = "cryptocurrency"
                         });
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.Organisations", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(75)
+                        .HasColumnType("varchar");
+
+                    b.Property<DateTime>("Registered")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(286)
+                        .HasColumnType("varchar");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Url")
+                        .IsUnique()
+                        .UseCollation(new[] { "case_insensitive_collation" });
+
+                    b.ToTable("Organisations");
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.Tags", b =>
@@ -218,7 +248,7 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"),
-                            Created = new DateTime(2022, 1, 10, 17, 59, 19, 12, DateTimeKind.Local).AddTicks(8565),
+                            Created = new DateTime(2022, 1, 10, 22, 22, 10, 506, DateTimeKind.Local).AddTicks(7399),
                             Description = "bitcoin articles",
                             Name = "Bitcoin",
                             Permalink = "bitcoin"
@@ -226,7 +256,7 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"),
-                            Created = new DateTime(2022, 1, 10, 17, 59, 19, 12, DateTimeKind.Local).AddTicks(9018),
+                            Created = new DateTime(2022, 1, 10, 22, 22, 10, 506, DateTimeKind.Local).AddTicks(7686),
                             Description = "Crypto related articles",
                             Name = "Crypto",
                             Permalink = "crypto"
@@ -273,25 +303,9 @@ namespace Geekiam.Database.Migrations
 
             modelBuilder.Entity("Geekiam.Database.Entities.Articles", b =>
                 {
-                    b.HasOne("Geekiam.Database.Entities.Authors", "Author")
-                        .WithMany("Articles")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("Geekiam.Database.Entities.Articles", b =>
-                {
                     b.Navigation("ArticleCategories");
 
                     b.Navigation("ArticleTags");
-                });
-
-            modelBuilder.Entity("Geekiam.Database.Entities.Authors", b =>
-                {
-                    b.Navigation("Articles");
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.Categories", b =>

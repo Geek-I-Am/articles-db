@@ -12,6 +12,23 @@ namespace Geekiam.Database.Migrations
                 .Annotation("Npgsql:PostgresExtension:uuid-ossp", ",,");
 
             migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
+                    Title = table.Column<string>(type: "varchar", maxLength: 75, nullable: false),
+                    Summary = table.Column<string>(type: "varchar", maxLength: 300, nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: true),
+                    Published = table.Column<DateTime>(type: "date", nullable: false),
+                    Url = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Authors",
                 columns: table => new
                 {
@@ -41,6 +58,21 @@ namespace Geekiam.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Organisations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
+                    Name = table.Column<string>(type: "varchar", maxLength: 75, nullable: false),
+                    Url = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Registered = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Organisations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tags",
                 columns: table => new
                 {
@@ -53,30 +85,6 @@ namespace Geekiam.Database.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Articles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
-                    Title = table.Column<string>(type: "varchar", maxLength: 75, nullable: false),
-                    AuthorId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Summary = table.Column<string>(type: "varchar", maxLength: 300, nullable: false),
-                    Content = table.Column<string>(type: "text", nullable: true),
-                    Published = table.Column<DateTime>(type: "date", nullable: false),
-                    Url = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Articles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Articles_Authors_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "Authors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,8 +140,8 @@ namespace Geekiam.Database.Migrations
                 columns: new[] { "Id", "Created", "Description", "Name", "Permalink" },
                 values: new object[,]
                 {
-                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 10, 17, 59, 19, 1, DateTimeKind.Local).AddTicks(620), "Software development based articles", "Software Development", "software-development" },
-                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 10, 17, 59, 19, 10, DateTimeKind.Local).AddTicks(5308), "Cryptocurrency related articles", "Cryptocurrency", "cryptocurrency" }
+                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 10, 22, 22, 10, 494, DateTimeKind.Local).AddTicks(9091), "Software development based articles", "Software Development", "software-development" },
+                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 10, 22, 22, 10, 503, DateTimeKind.Local).AddTicks(8298), "Cryptocurrency related articles", "Cryptocurrency", "cryptocurrency" }
                 });
 
             migrationBuilder.InsertData(
@@ -141,19 +149,14 @@ namespace Geekiam.Database.Migrations
                 columns: new[] { "Id", "Created", "Description", "Name", "Permalink" },
                 values: new object[,]
                 {
-                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 10, 17, 59, 19, 12, DateTimeKind.Local).AddTicks(8565), "bitcoin articles", "Bitcoin", "bitcoin" },
-                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 10, 17, 59, 19, 12, DateTimeKind.Local).AddTicks(9018), "Crypto related articles", "Crypto", "crypto" }
+                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 10, 22, 22, 10, 506, DateTimeKind.Local).AddTicks(7399), "bitcoin articles", "Bitcoin", "bitcoin" },
+                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 10, 22, 22, 10, 506, DateTimeKind.Local).AddTicks(7686), "Crypto related articles", "Crypto", "crypto" }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleCategories_CategoryId",
                 table: "ArticleCategories",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Articles_AuthorId",
-                table: "Articles",
-                column: "AuthorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Articles_Id",
@@ -193,6 +196,19 @@ namespace Geekiam.Database.Migrations
                 .Annotation("Relational:Collation", new[] { "case_insensitive_collation" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Organisations_Id",
+                table: "Organisations",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Organisations_Url",
+                table: "Organisations",
+                column: "Url",
+                unique: true)
+                .Annotation("Relational:Collation", new[] { "case_insensitive_collation" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tags_Id",
                 table: "Tags",
                 column: "Id",
@@ -215,6 +231,12 @@ namespace Geekiam.Database.Migrations
                 name: "ArticleTags");
 
             migrationBuilder.DropTable(
+                name: "Authors");
+
+            migrationBuilder.DropTable(
+                name: "Organisations");
+
+            migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
@@ -222,9 +244,6 @@ namespace Geekiam.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tags");
-
-            migrationBuilder.DropTable(
-                name: "Authors");
         }
     }
 }
