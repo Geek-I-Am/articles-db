@@ -9,5 +9,4 @@ public class Authors : BaseEntity
     public string LastName { get; set; }
     public string Biography { get; set; }
 
-   
 }

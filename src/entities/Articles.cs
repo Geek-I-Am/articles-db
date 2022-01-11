@@ -14,7 +14,6 @@ namespace Geekiam.Database.Entities
         public DateTime Published { get; set; }
         public string Url { get; set; }
         
-        public DateTime Created { get; set; }
 
         public ICollection<ArticleCategories> ArticleCategories { get; set; }
         public ICollection<ArticleTags> ArticleTags { get; set; }

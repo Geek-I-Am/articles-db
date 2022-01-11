@@ -32,5 +32,9 @@ public class AuthorConfiguration : IEntityTypeConfiguration<Authors>
         builder.Property(x => x.Biography)
             .HasColumnType(ColumnTypes.Text);
         
+        builder.Property(x => x.Created)
+            .HasColumnType(ColumnTypes.TimeStamp)
+            .IsRequired();
+        
     }
 }
