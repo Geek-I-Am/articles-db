@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Geekiam.Database.Configuration;
 
-public class OrganisationConfiguration : IEntityTypeConfiguration<Organisations>
+public class FeedConfiguration : IEntityTypeConfiguration<Feeds>
 {
-    public void Configure(EntityTypeBuilder<Organisations> builder)
+    public void Configure(EntityTypeBuilder<Feeds> builder)
     {
-        builder.ToTable(nameof(Organisations));
+        builder.ToTable(nameof(Feeds));
         builder.HasKey(x => x.Id);
 
         builder.HasIndex(x => x.Id)
@@ -22,18 +22,20 @@ public class OrganisationConfiguration : IEntityTypeConfiguration<Organisations>
             .HasColumnType(ColumnTypes.UUID)
             .HasDefaultValueSql(PostgreExtensions.UUIDAlgorithm)
             .IsRequired();
-            
-        builder.Property(x => x.Name)
+        
+        builder.HasIndex(x => x.Url)
+            .UseCollation("case_insensitive_collation")
+            .IsUnique();
+        
+        builder.Property(x => x.Title)
             .HasColumnType(ColumnTypes.Varchar)
             .HasMaxLength(75)
             .IsRequired();
         
-        builder.Property(x => x.Url)
-            .HasColumnType(ColumnTypes.Varchar)
-            .HasMaxLength(286)
-            .IsRequired();
-        
-        builder.Property(x => x.Description)
-            .HasColumnType(ColumnTypes.Text);
+    
+
+        builder.HasOne(x => x.Website)
+            .WithMany(x => x.Feeds)
+            .HasForeignKey(x => x.WebsiteID);
     }
 }

@@ -48,7 +48,8 @@ namespace Geekiam.Database.Configuration
 
             builder.Property(x => x.Created)
                 .HasColumnType(ColumnTypes.TimeStamp)
-                .IsRequired();
+                .HasDefaultValueSql("NOW()")
+                .ValueGeneratedOnAdd();
         }
     }
 }

@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Geekiam.Database.Migrations
 {
     [DbContext(typeof(GeekiamContext))]
-    [Migration("20220110222210_initial")]
+    [Migration("20220113163419_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,9 @@ namespace Geekiam.Database.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<DateTime>("Published")
                         .HasColumnType("date");
@@ -106,6 +108,11 @@ namespace Geekiam.Database.Migrations
                     b.Property<string>("Biography")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -132,7 +139,9 @@ namespace Geekiam.Database.Migrations
                         .HasDefaultValueSql("uuid_generate_v4()");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -162,7 +171,7 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"),
-                            Created = new DateTime(2022, 1, 10, 22, 22, 10, 494, DateTimeKind.Local).AddTicks(9091),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Software development based articles",
                             Name = "Software Development",
                             Permalink = "software-development"
@@ -170,35 +179,36 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"),
-                            Created = new DateTime(2022, 1, 10, 22, 22, 10, 503, DateTimeKind.Local).AddTicks(8298),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Cryptocurrency related articles",
                             Name = "Cryptocurrency",
                             Permalink = "cryptocurrency"
                         });
                 });
 
-            modelBuilder.Entity("Geekiam.Database.Entities.Organisations", b =>
+            modelBuilder.Entity("Geekiam.Database.Entities.Feeds", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("uuid_generate_v4()");
 
-                    b.Property<string>("Description")
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FeedType")
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(75)
                         .HasColumnType("varchar");
 
-                    b.Property<DateTime>("Registered")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<string>("Url")
-                        .IsRequired()
-                        .HasMaxLength(286)
-                        .HasColumnType("varchar");
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("WebsiteID")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -209,7 +219,9 @@ namespace Geekiam.Database.Migrations
                         .IsUnique()
                         .UseCollation(new[] { "case_insensitive_collation" });
 
-                    b.ToTable("Organisations");
+                    b.HasIndex("WebsiteID");
+
+                    b.ToTable("Feeds");
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.Tags", b =>
@@ -220,7 +232,7 @@ namespace Geekiam.Database.Migrations
                         .HasDefaultValueSql("uuid_generate_v4()");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -250,7 +262,7 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"),
-                            Created = new DateTime(2022, 1, 10, 22, 22, 10, 506, DateTimeKind.Local).AddTicks(7399),
+                            Created = new DateTime(2022, 1, 13, 16, 34, 19, 94, DateTimeKind.Local).AddTicks(5125),
                             Description = "bitcoin articles",
                             Name = "Bitcoin",
                             Permalink = "bitcoin"
@@ -258,11 +270,55 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"),
-                            Created = new DateTime(2022, 1, 10, 22, 22, 10, 506, DateTimeKind.Local).AddTicks(7686),
+                            Created = new DateTime(2022, 1, 13, 16, 34, 19, 104, DateTimeKind.Local).AddTicks(483),
                             Description = "Crypto related articles",
                             Name = "Crypto",
                             Permalink = "crypto"
                         });
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.Websites", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<bool>("Active")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<bool>("Moderate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(75)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(286)
+                        .HasColumnType("varchar");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Url")
+                        .IsUnique()
+                        .UseCollation(new[] { "case_insensitive_collation" });
+
+                    b.ToTable("Websites");
                 });
 
             modelBuilder.Entity("Geekiam.Database.Entities.ArticleCategories", b =>
@@ -303,6 +359,17 @@ namespace Geekiam.Database.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("Geekiam.Database.Entities.Feeds", b =>
+                {
+                    b.HasOne("Geekiam.Database.Entities.Websites", "Website")
+                        .WithMany("Feeds")
+                        .HasForeignKey("WebsiteID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Website");
+                });
+
             modelBuilder.Entity("Geekiam.Database.Entities.Articles", b =>
                 {
                     b.Navigation("ArticleCategories");
@@ -318,6 +385,11 @@ namespace Geekiam.Database.Migrations
             modelBuilder.Entity("Geekiam.Database.Entities.Tags", b =>
                 {
                     b.Navigation("ArticleTags");
+                });
+
+            modelBuilder.Entity("Geekiam.Database.Entities.Websites", b =>
+                {
+                    b.Navigation("Feeds");
                 });
 #pragma warning restore 612, 618
         }

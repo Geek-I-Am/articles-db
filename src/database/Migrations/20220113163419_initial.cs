@@ -21,7 +21,7 @@ namespace Geekiam.Database.Migrations
                     Content = table.Column<string>(type: "text", nullable: true),
                     Published = table.Column<DateTime>(type: "date", nullable: false),
                     Url = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp", nullable: false)
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "NOW()")
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,8 @@ namespace Geekiam.Database.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
                     FirstName = table.Column<string>(type: "varchar", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "varchar", maxLength: 65, nullable: false),
-                    Biography = table.Column<string>(type: "text", nullable: true)
+                    Biography = table.Column<string>(type: "text", nullable: true),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "NOW()")
                 },
                 constraints: table =>
                 {
@@ -50,26 +51,11 @@ namespace Geekiam.Database.Migrations
                     Name = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     Permalink = table.Column<string>(type: "varchar", maxLength: 55, nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp", nullable: false)
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "NOW()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Organisations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
-                    Name = table.Column<string>(type: "varchar", maxLength: 75, nullable: false),
-                    Url = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    Registered = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Organisations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,11 +66,27 @@ namespace Geekiam.Database.Migrations
                     Name = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     Permalink = table.Column<string>(type: "varchar", maxLength: 55, nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp", nullable: false)
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Websites",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
+                    Name = table.Column<string>(type: "varchar", maxLength: 75, nullable: false),
+                    Url = table.Column<string>(type: "varchar", maxLength: 286, nullable: false),
+                    Active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    Moderate = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "NOW()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Websites", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -135,13 +137,35 @@ namespace Geekiam.Database.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Feeds",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
+                    WebsiteID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "varchar", maxLength: 75, nullable: false),
+                    Url = table.Column<string>(type: "text", nullable: true),
+                    FeedType = table.Column<string>(type: "text", nullable: true),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feeds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Feeds_Websites_WebsiteID",
+                        column: x => x.WebsiteID,
+                        principalTable: "Websites",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "Created", "Description", "Name", "Permalink" },
+                columns: new[] { "Id", "Description", "Name", "Permalink" },
                 values: new object[,]
                 {
-                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 10, 22, 22, 10, 494, DateTimeKind.Local).AddTicks(9091), "Software development based articles", "Software Development", "software-development" },
-                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 10, 22, 22, 10, 503, DateTimeKind.Local).AddTicks(8298), "Cryptocurrency related articles", "Cryptocurrency", "cryptocurrency" }
+                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"), "Software development based articles", "Software Development", "software-development" },
+                    { new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"), "Cryptocurrency related articles", "Cryptocurrency", "cryptocurrency" }
                 });
 
             migrationBuilder.InsertData(
@@ -149,8 +173,8 @@ namespace Geekiam.Database.Migrations
                 columns: new[] { "Id", "Created", "Description", "Name", "Permalink" },
                 values: new object[,]
                 {
-                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 10, 22, 22, 10, 506, DateTimeKind.Local).AddTicks(7399), "bitcoin articles", "Bitcoin", "bitcoin" },
-                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 10, 22, 22, 10, 506, DateTimeKind.Local).AddTicks(7686), "Crypto related articles", "Crypto", "crypto" }
+                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"), new DateTime(2022, 1, 13, 16, 34, 19, 94, DateTimeKind.Local).AddTicks(5125), "bitcoin articles", "Bitcoin", "bitcoin" },
+                    { new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"), new DateTime(2022, 1, 13, 16, 34, 19, 104, DateTimeKind.Local).AddTicks(483), "Crypto related articles", "Crypto", "crypto" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -196,17 +220,22 @@ namespace Geekiam.Database.Migrations
                 .Annotation("Relational:Collation", new[] { "case_insensitive_collation" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Organisations_Id",
-                table: "Organisations",
+                name: "IX_Feeds_Id",
+                table: "Feeds",
                 column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Organisations_Url",
-                table: "Organisations",
+                name: "IX_Feeds_Url",
+                table: "Feeds",
                 column: "Url",
                 unique: true)
                 .Annotation("Relational:Collation", new[] { "case_insensitive_collation" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Feeds_WebsiteID",
+                table: "Feeds",
+                column: "WebsiteID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tags_Id",
@@ -218,6 +247,19 @@ namespace Geekiam.Database.Migrations
                 name: "IX_Tags_Name",
                 table: "Tags",
                 column: "Name",
+                unique: true)
+                .Annotation("Relational:Collation", new[] { "case_insensitive_collation" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Websites_Id",
+                table: "Websites",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Websites_Url",
+                table: "Websites",
+                column: "Url",
                 unique: true)
                 .Annotation("Relational:Collation", new[] { "case_insensitive_collation" });
         }
@@ -234,7 +276,7 @@ namespace Geekiam.Database.Migrations
                 name: "Authors");
 
             migrationBuilder.DropTable(
-                name: "Organisations");
+                name: "Feeds");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -244,6 +286,9 @@ namespace Geekiam.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "Websites");
         }
     }
 }

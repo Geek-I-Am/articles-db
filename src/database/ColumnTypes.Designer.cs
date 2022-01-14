@@ -8,6 +8,9 @@
 //------------------------------------------------------------------------------
 
 namespace Geekiam.Database {
+    using System;
+    
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -69,6 +72,12 @@ namespace Geekiam.Database {
         internal static string TimeStamp {
             get {
                 return ResourceManager.GetString("TimeStamp", resourceCulture);
+            }
+        }
+        
+        internal static string Boolean {
+            get {
+                return ResourceManager.GetString("Boolean", resourceCulture);
             }
         }
     }

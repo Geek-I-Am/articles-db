@@ -31,6 +31,9 @@
         <value>date</value>
     </data>
     <data name="TimeStamp" xml:space="preserve">
-        <value>timestamp</value>
+        <value>timestamp without time zone</value>
+    </data>
+    <data name="Boolean" xml:space="preserve">
+        <value>boolean</value>
     </data>
 </root>

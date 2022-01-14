@@ -15,7 +15,7 @@ namespace Geekiam.Database
         public DbSet<Categories> Categories { get; set; }
         public DbSet<ArticleCategories> ArticleCategories { get; set; }
         public DbSet<ArticleTags> ArticleTags { get; set; }
-        public DbSet<Organisations> Organisations { get; set; }
+        public DbSet<Websites> Websites { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

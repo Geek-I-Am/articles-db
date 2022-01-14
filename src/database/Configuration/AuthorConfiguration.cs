@@ -34,7 +34,8 @@ public class AuthorConfiguration : IEntityTypeConfiguration<Authors>
         
         builder.Property(x => x.Created)
             .HasColumnType(ColumnTypes.TimeStamp)
-            .IsRequired();
+            .HasDefaultValueSql("NOW()")
+            .ValueGeneratedOnAdd();
         
     }
 }
