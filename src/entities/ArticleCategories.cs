@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Geekiam.Database.Entities;
 
-public class ArticleCategories
+public class ArticleCategories : BaseEntity
 {
     public Guid ArticleId { get; set; }
     public Articles Article { get; set; }

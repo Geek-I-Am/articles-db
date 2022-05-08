@@ -19,6 +19,16 @@ public class AuthorConfiguration : IEntityTypeConfiguration<Authors>
             .HasDefaultValueSql(PostgreExtensions.UUIDAlgorithm)
             .IsRequired();
         
+        builder.Property(x => x.Created)
+            .HasColumnType(ColumnTypes.TimeStamp)
+            .HasDefaultValueSql("NOW()")
+            .ValueGeneratedOnAdd();
+            
+        builder.Property(x => x.Modified)
+            .HasColumnType(ColumnTypes.TimeStamp)
+            .HasDefaultValueSql("NOW()")
+            .ValueGeneratedOnUpdate();
+        
         builder.Property(x => x.FirstName)
             .HasColumnType(ColumnTypes.Varchar)
             .HasMaxLength(30)
@@ -32,10 +42,7 @@ public class AuthorConfiguration : IEntityTypeConfiguration<Authors>
         builder.Property(x => x.Biography)
             .HasColumnType(ColumnTypes.Text);
         
-        builder.Property(x => x.Created)
-            .HasColumnType(ColumnTypes.TimeStamp)
-            .HasDefaultValueSql("NOW()")
-            .ValueGeneratedOnAdd();
+       
         
     }
 }

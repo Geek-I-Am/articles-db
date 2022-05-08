@@ -22,6 +22,15 @@ public class WebsitesConfiguration : IEntityTypeConfiguration<Websites>
             .HasColumnType(ColumnTypes.UUID)
             .HasDefaultValueSql(PostgreExtensions.UUIDAlgorithm)
             .IsRequired();
+        builder.Property(x => x.Created)
+            .HasColumnType(ColumnTypes.TimeStamp)
+            .HasDefaultValueSql("NOW()")
+            .ValueGeneratedOnAdd();
+            
+        builder.Property(x => x.Modified)
+            .HasColumnType(ColumnTypes.TimeStamp)
+            .HasDefaultValueSql("NOW()")
+            .ValueGeneratedOnUpdate();
             
         builder.Property(x => x.Name)
             .HasColumnType(ColumnTypes.Varchar)
@@ -33,10 +42,7 @@ public class WebsitesConfiguration : IEntityTypeConfiguration<Websites>
             .HasMaxLength(286)
             .IsRequired();
         
-        builder.Property(x => x.Created)
-            .HasColumnType(ColumnTypes.TimeStamp)
-            .HasDefaultValueSql("NOW()")
-            .ValueGeneratedOnAdd();
+       
         
         builder.Property(x => x.Active)
             .HasColumnType(ColumnTypes.Boolean)

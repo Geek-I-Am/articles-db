@@ -23,6 +23,15 @@ namespace Geekiam.Database.Configuration
                 .HasColumnType(ColumnTypes.UUID)
                 .HasDefaultValueSql(PostgreExtensions.UUIDAlgorithm)
                 .IsRequired();
+            builder.Property(x => x.Created)
+                .HasColumnType(ColumnTypes.TimeStamp)
+                .HasDefaultValueSql("NOW()")
+                .ValueGeneratedOnAdd();
+            
+            builder.Property(x => x.Modified)
+                .HasColumnType(ColumnTypes.TimeStamp)
+                .HasDefaultValueSql("NOW()")
+                .ValueGeneratedOnUpdate();
             
            builder.Property(x => x.Title)
                 .HasColumnType(ColumnTypes.Varchar)
@@ -46,10 +55,7 @@ namespace Geekiam.Database.Configuration
                 .HasMaxLength(286)
                 .IsRequired();
 
-            builder.Property(x => x.Created)
-                .HasColumnType(ColumnTypes.TimeStamp)
-                .HasDefaultValueSql("NOW()")
-                .ValueGeneratedOnAdd();
+            
         }
     }
 }

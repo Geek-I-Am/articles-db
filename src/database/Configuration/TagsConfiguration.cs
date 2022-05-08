@@ -19,6 +19,15 @@ public class TagsConfiguration : IEntityTypeConfiguration<Tags>
             .HasColumnType(ColumnTypes.UUID)
             .HasDefaultValueSql(PostgreExtensions.UUIDAlgorithm)
             .IsRequired();
+        builder.Property(x => x.Created)
+            .HasColumnType(ColumnTypes.TimeStamp)
+            .HasDefaultValueSql("NOW()")
+            .ValueGeneratedOnAdd();
+            
+        builder.Property(x => x.Modified)
+            .HasColumnType(ColumnTypes.TimeStamp)
+            .HasDefaultValueSql("NOW()")
+            .ValueGeneratedOnUpdate();
 
         builder.HasIndex(x => x.Name)
             .UseCollation("case_insensitive_collation")
@@ -37,10 +46,7 @@ public class TagsConfiguration : IEntityTypeConfiguration<Tags>
             .HasMaxLength(55)
             .IsRequired();
 
-        builder.Property(x => x.Created)
-            .HasColumnType(ColumnTypes.TimeStamp)
-            .IsRequired();
-
+       
         builder.HasData(
             new Tags
             {

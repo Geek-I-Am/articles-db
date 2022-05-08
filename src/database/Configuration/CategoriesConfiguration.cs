@@ -19,6 +19,15 @@ public class CategoriesConfiguration : IEntityTypeConfiguration<Categories>
             .HasColumnType(ColumnTypes.UUID)
             .HasDefaultValueSql(PostgreExtensions.UUIDAlgorithm)
             .IsRequired();
+        builder.Property(x => x.Created)
+            .HasColumnType(ColumnTypes.TimeStamp)
+            .HasDefaultValueSql("NOW()")
+            .ValueGeneratedOnAdd();
+            
+        builder.Property(x => x.Modified)
+            .HasColumnType(ColumnTypes.TimeStamp)
+            .HasDefaultValueSql("NOW()")
+            .ValueGeneratedOnUpdate();
 
         builder.HasIndex(x => x.Name)
             .UseCollation("case_insensitive_collation")
@@ -37,10 +46,7 @@ public class CategoriesConfiguration : IEntityTypeConfiguration<Categories>
             .HasMaxLength(55)
             .IsRequired();
 
-        builder.Property(x => x.Created)
-            .HasColumnType(ColumnTypes.TimeStamp)
-            .HasDefaultValueSql("NOW()")
-            .ValueGeneratedOnAdd();
+      
         
         builder.HasData(
             new Categories {Id = Guid.Parse("334e7c6a-9779-4018-90d2-7b7f43a8e101"), Name = "Software Development", Permalink = "software-development", Description = "Software development based articles"},

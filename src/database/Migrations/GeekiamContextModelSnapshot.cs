@@ -29,6 +29,15 @@ namespace Geekiam.Database.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("timestamp without time zone");
+
                     b.HasKey("ArticleId", "CategoryId");
 
                     b.HasIndex("CategoryId");
@@ -43,6 +52,21 @@ namespace Geekiam.Database.Migrations
 
                     b.Property<Guid>("TagId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.HasKey("ArticleId", "TagId");
 
@@ -63,6 +87,11 @@ namespace Geekiam.Database.Migrations
 
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("NOW()");
 
@@ -121,6 +150,11 @@ namespace Geekiam.Database.Migrations
                         .HasMaxLength(65)
                         .HasColumnType("varchar");
 
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Id")
@@ -143,6 +177,11 @@ namespace Geekiam.Database.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -171,6 +210,7 @@ namespace Geekiam.Database.Migrations
                             Id = new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e101"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Software development based articles",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Software Development",
                             Permalink = "software-development"
                         },
@@ -179,6 +219,7 @@ namespace Geekiam.Database.Migrations
                             Id = new Guid("334e7c6a-9779-4018-90d2-7b7f43a8e102"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Cryptocurrency related articles",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency",
                             Permalink = "cryptocurrency"
                         });
@@ -192,10 +233,17 @@ namespace Geekiam.Database.Migrations
                         .HasDefaultValueSql("uuid_generate_v4()");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("FeedType")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -230,10 +278,17 @@ namespace Geekiam.Database.Migrations
                         .HasDefaultValueSql("uuid_generate_v4()");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -260,16 +315,18 @@ namespace Geekiam.Database.Migrations
                         new
                         {
                             Id = new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e101"),
-                            Created = new DateTime(2022, 1, 13, 16, 34, 19, 94, DateTimeKind.Local).AddTicks(5125),
+                            Created = new DateTime(2022, 5, 8, 10, 14, 56, 639, DateTimeKind.Local).AddTicks(8247),
                             Description = "bitcoin articles",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Bitcoin",
                             Permalink = "bitcoin"
                         },
                         new
                         {
                             Id = new Guid("434e7c6a-9779-4018-90d2-7b7f43a8e102"),
-                            Created = new DateTime(2022, 1, 13, 16, 34, 19, 104, DateTimeKind.Local).AddTicks(483),
+                            Created = new DateTime(2022, 5, 8, 10, 14, 56, 649, DateTimeKind.Local).AddTicks(5685),
                             Description = "Crypto related articles",
+                            Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Crypto",
                             Permalink = "crypto"
                         });
@@ -296,6 +353,11 @@ namespace Geekiam.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(true);
+
+                    b.Property<DateTime>("Modified")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Name")
                         .IsRequired()
