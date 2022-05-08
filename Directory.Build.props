@@ -1,7 +1,6 @@
 <Project>
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <AssemblyName>Geekiam.Database</AssemblyName>
         <RootNamespace>Geekiam.Database</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <IsPackable>true</IsPackable>
