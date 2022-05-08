@@ -20,8 +20,7 @@ public abstract class BaseContext<T> : DbContext where T : DbContext
         {
             case EntityState.Added:
                 entity.Created = DateTime.Now;
-                entity.Modified = DateTime.UtcNow;
-                break;
+              break;
 
             case EntityState.Modified:
                 entity.Modified = DateTime.UtcNow;
