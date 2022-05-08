@@ -1,21 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <AssemblyName>Geekiam.Database</AssemblyName>
-        <RootNamespace>Geekiam.Database</RootNamespace>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <IsPackable>true</IsPackable>
-        <Title>Geek.I.Am Article Database</Title>
-        <Authors>Gary Woodfine</Authors>
-        <Description>Article CMS for the Geek.I.Am mobile application</Description>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>database</PackageTags>
-        <RepositoryUrl>https://github.com/Geek-I-Am/articles-db</RepositoryUrl>
-        <Copyright>Copyright © 2005 - 2021 Three Nine Consulting Limited</Copyright>
-        <PackageProjectUrl>https://geekiam.io</PackageProjectUrl>
-        <PackageIconUrl>https://static.threenine.co.uk/threenine_icon.png</PackageIconUrl>
-    </PropertyGroup>
+   
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.8" />

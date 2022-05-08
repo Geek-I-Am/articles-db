@@ -1,0 +1,22 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>Geekiam.Database</AssemblyName>
+        <RootNamespace>Geekiam.Database</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IsPackable>true</IsPackable>
+        <Title>Geek.I.Am Article Database</Title>
+        <Authors>Gary Woodfine</Authors>
+        <Description>Article CMS for the Geek.I.Am mobile application</Description>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>database</PackageTags>
+        <RepositoryUrl>https://github.com/Geek-I-Am/articles-db</RepositoryUrl>
+        <Copyright>Copyright © 2005 - 2021 Three Nine Consulting Limited</Copyright>
+        <PackageProjectUrl>https://geekiam.io</PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <Version></Version>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="icon.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+</Project>
